@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
 
-export interface IAuthUseController {
+export interface IUserController {
   handle: (req: Request, res: Response) => Promise<Response>;
 }

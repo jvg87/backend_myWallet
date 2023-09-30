@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 import { CreateUserService } from "../../../services/User/CreateUser/CreateUserService";
-import { ICreateUserController } from "./protocols";
+import { IUserController } from "../protocols";
 
 const createSchema = z.object({
   name: z.string().min(3),
@@ -12,7 +12,7 @@ const createSchema = z.object({
   balance: z.number().default(0).optional(),
 });
 
-export class CreateUserController implements ICreateUserController {
+export class CreateUserController implements IUserController {
   constructor(private readonly createUserService: CreateUserService) {}
   async handle(req: Request, res: Response): Promise<Response> {
     const { email, name, password, balance = 0 } = createSchema.parse(req.body);

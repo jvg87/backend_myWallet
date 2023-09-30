@@ -38,4 +38,20 @@ export class UserRepository implements IUserRepository {
 
     return userAlreadyExists;
   }
+
+  async findUserById(id: string): Promise<CreateResponse | null> {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        balance: true,
+      },
+    });
+
+    return user;
+  }
 }

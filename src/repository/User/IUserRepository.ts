@@ -21,7 +21,24 @@ export interface AuthResponse {
   token: string;
 }
 
+export interface BalanceResponse {
+  sumRevenues: {
+    tag: string;
+    saldo: number;
+  };
+  sumExpenses: {
+    tag: string;
+    saldo: number;
+  };
+  balance: {
+    tag: string;
+    saldo: number;
+  };
+}
+
 export interface IUserRepository {
   create: (props: CreateProps) => Promise<CreateResponse>;
   findUserByEmail: (email: string) => Promise<IUSer | null>;
+  findUserById: (id: string) => Promise<CreateResponse | null>;
+  // findBalance: (user_id: string) => Promise<BalanceResponse>;
 }
