@@ -1,11 +1,10 @@
 import { Request, Response, Router } from "express";
-import { BadRequestError } from "../helpers/apiErros";
+import { createUserController } from "../controller/User";
 
 const router = Router();
 
-router.get("/teste", (req: Request, res: Response) => {
-  throw new BadRequestError("Error testing");
-  res.json({ message: "Initial test" });
+router.post("/user", async (req: Request, res: Response) => {
+  await createUserController.handle(req, res);
 });
 
 export { router };
