@@ -7,7 +7,21 @@ export interface CreateProps {
   balance: number;
 }
 
+export interface CreateResponse {
+  id: string;
+  name: string;
+  email: string;
+  balance: number;
+}
+
+export interface AuthResponse {
+  id?: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
 export interface IUserRepository {
-  create: (props: CreateProps) => Promise<Omit<IUSer, "password">>;
+  create: (props: CreateProps) => Promise<CreateResponse>;
   findUserByEmail: (email: string) => Promise<IUSer | null>;
 }

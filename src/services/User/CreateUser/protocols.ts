@@ -1,6 +1,8 @@
-import { IUSer } from "../../../models/User";
-import { CreateProps } from "../../../repository/User/IUserRepository";
+import {
+  CreateProps,
+  CreateResponse,
+} from "../../../repository/User/IUserRepository";
 
 export interface ICreateUserService {
-  execute: (props: CreateProps) => Promise<IUSer>;
+  execute: (props: CreateProps) => Promise<CreateResponse>;
 }

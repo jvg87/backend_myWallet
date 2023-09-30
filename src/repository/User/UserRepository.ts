@@ -1,6 +1,10 @@
 import prisma from "../../database/prisma";
 import { IUSer } from "../../models/User";
-import { CreateProps, IUserRepository } from "./IUserRepository";
+import {
+  CreateProps,
+  CreateResponse,
+  IUserRepository,
+} from "./IUserRepository";
 
 export class UserRepository implements IUserRepository {
   async create({
@@ -8,7 +12,7 @@ export class UserRepository implements IUserRepository {
     name,
     email,
     balance,
-  }: CreateProps): Promise<Omit<IUSer, "password">> {
+  }: CreateProps): Promise<CreateResponse> {
     const user = await prisma.user.create({
       data: {
         name,
