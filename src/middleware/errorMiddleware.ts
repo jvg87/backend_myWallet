@@ -5,9 +5,10 @@ import { ApiError } from "../helpers/apiErros";
 
 export const errorMiddleware = (
   err: Error | ApiError | ZodError,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _next: NextFunction
 ): Response => {
   if (err instanceof ApiError) {
     const statusCode = err.statusCode;
