@@ -1,24 +1,16 @@
-import { Category } from "@prisma/client";
 import { NotFoundError } from "../../../helpers/apiErros";
 import { ICategoryRepository } from "../../../repository/Category/ICategoryRepository";
-import { IUpdateCategoryService } from "./Protocols";
+import { IDeleteCategoryService } from "./Protocols";
 
-export class UpdateCategoryService implements IUpdateCategoryService {
+export class DeleteCategoryService implements IDeleteCategoryService {
   constructor(private readonly categoryRepository: ICategoryRepository) {}
-
-  async execute(id: string, user_id: string, name: string): Promise<Category> {
+  async execute(id: string): Promise<void> {
     const category = await this.categoryRepository.findCategoryById(id);
 
     if (!category) {
       throw new NotFoundError("Category not found");
     }
 
-    const update = await this.categoryRepository.updateCategory(
-      user_id,
-      name,
-      id
-    );
-
-    return update;
+    await this.categoryRepository.deleteCategoryById(id);
   }
 }

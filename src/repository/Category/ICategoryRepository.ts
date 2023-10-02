@@ -16,4 +16,5 @@ export interface ICategoryRepository {
     name?: string,
     id?: string
   ) => Promise<Category>;
+  deleteCategoryById: (id: string) => Promise<void>;
 }

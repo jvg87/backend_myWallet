@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import {
   createCategoryController,
+  deleteCategoryController,
   getCategoryController,
   updateCategoryController,
 } from "../controller/Category";
@@ -43,6 +44,9 @@ router.get("/category", async (req: Request, res: Response) => {
 });
 router.put("/category", async (req: Request, res: Response) => {
   await updateCategoryController.handle(req, res);
+});
+router.delete("/category", async (req: Request, res: Response) => {
+  await deleteCategoryController.handle(req, res);
 });
 
 export { router };
