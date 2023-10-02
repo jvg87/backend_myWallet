@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import {
   createCategoryController,
   getCategoryController,
+  updateCategoryController,
 } from "../controller/Category";
 import {
   authUserController,
@@ -39,6 +40,9 @@ router.post("/category", async (req: Request, res: Response) => {
 });
 router.get("/category", async (req: Request, res: Response) => {
   await getCategoryController.handle(req, res);
+});
+router.put("/category", async (req: Request, res: Response) => {
+  await updateCategoryController.handle(req, res);
 });
 
 export { router };

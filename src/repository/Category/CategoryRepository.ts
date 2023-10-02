@@ -28,6 +28,16 @@ export class CategoryRepository implements ICategoryRepository {
     return category;
   }
 
+  async findCategoryById(id: string): Promise<Category | null> {
+    const category = await prisma.category.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    return category;
+  }
+
   async findAllCategory(
     user_id: string,
     type?: Type
@@ -40,5 +50,23 @@ export class CategoryRepository implements ICategoryRepository {
     });
 
     return categories;
+  }
+
+  async updateCategory(
+    user_id: string,
+    name?: string,
+    id?: string
+  ): Promise<Category> {
+    const category = await prisma.category.update({
+      where: {
+        user_id,
+        id,
+      },
+      data: {
+        name,
+      },
+    });
+
+    return category;
   }
 }

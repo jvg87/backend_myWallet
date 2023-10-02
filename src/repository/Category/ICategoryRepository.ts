@@ -8,6 +8,12 @@ export interface CategoryProps {
 
 export interface ICategoryRepository {
   createCategory: (props: CategoryProps) => Promise<Category>;
+  findCategoryById: (id: string) => Promise<Category | null>;
   findCategoryByName: (name: string) => Promise<Category | null>;
   findAllCategory: (user_id: string, type?: Type) => Promise<Category[] | null>;
+  updateCategory: (
+    user_id: string,
+    name?: string,
+    id?: string
+  ) => Promise<Category>;
 }
