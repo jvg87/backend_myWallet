@@ -1,3 +1,4 @@
+import { Transaction, Type } from "@prisma/client";
 import { IUSer } from "../../models/User";
 
 export interface CreateProps {
@@ -21,24 +22,15 @@ export interface AuthResponse {
   token: string;
 }
 
-export interface BalanceResponse {
-  sumRevenues: {
-    tag: string;
-    saldo: number;
-  };
-  sumExpenses: {
-    tag: string;
-    saldo: number;
-  };
-  balance: {
-    tag: string;
-    saldo: number;
-  };
+export interface FindBalanceProps {
+  user_id: string;
+  type: Type;
+  newDate?: Date;
 }
 
 export interface IUserRepository {
   create: (props: CreateProps) => Promise<CreateResponse>;
   findUserByEmail: (email: string) => Promise<IUSer | null>;
   findUserById: (id: string) => Promise<CreateResponse | null>;
-  // findBalance: (user_id: string) => Promise<BalanceResponse>;
+  findBalance: (props: FindBalanceProps) => Promise<Transaction[]>;
 }

@@ -1,8 +1,10 @@
+import { Transaction } from "@prisma/client";
 import prisma from "../../database/prisma";
 import { IUSer } from "../../models/User";
 import {
   CreateProps,
   CreateResponse,
+  FindBalanceProps,
   IUserRepository,
 } from "./IUserRepository";
 
@@ -53,5 +55,17 @@ export class UserRepository implements IUserRepository {
     });
 
     return user;
+  }
+
+  async findBalance(props: FindBalanceProps): Promise<Transaction[]> {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        user_id: props.user_id,
+        type: props.type,
+        date: props.newDate,
+      },
+    });
+
+    return transactions;
   }
 }
