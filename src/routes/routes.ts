@@ -1,5 +1,8 @@
 import { Request, Response, Router } from "express";
-import { createCategoryController } from "../controller/Category/CreateCategory";
+import {
+  createCategoryController,
+  getCategoryController,
+} from "../controller/Category";
 import {
   authUserController,
   createUserController,
@@ -33,6 +36,9 @@ router.put("/me", async (req: Request, res: Response) => {
 
 router.post("/category", async (req: Request, res: Response) => {
   await createCategoryController.handle(req, res);
+});
+router.get("/category", async (req: Request, res: Response) => {
+  await getCategoryController.handle(req, res);
 });
 
 export { router };

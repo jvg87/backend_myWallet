@@ -9,4 +9,5 @@ export interface CategoryProps {
 export interface ICategoryRepository {
   createCategory: (props: CategoryProps) => Promise<Category>;
   findCategoryByName: (name: string) => Promise<Category | null>;
+  findAllCategory: (user_id: string, type?: Type) => Promise<Category[] | null>;
 }

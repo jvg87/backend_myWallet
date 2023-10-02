@@ -1,4 +1,4 @@
-import { Category } from "@prisma/client";
+import { Category, Type } from "@prisma/client";
 import prisma from "../../database/prisma";
 import { CategoryProps, ICategoryRepository } from "./ICategoryRepository";
 
@@ -26,5 +26,19 @@ export class CategoryRepository implements ICategoryRepository {
       },
     });
     return category;
+  }
+
+  async findAllCategory(
+    user_id: string,
+    type?: Type
+  ): Promise<Category[] | null> {
+    const categories = await prisma.category.findMany({
+      where: {
+        user_id,
+        type,
+      },
+    });
+
+    return categories;
   }
 }
