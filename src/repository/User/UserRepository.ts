@@ -6,6 +6,7 @@ import {
   CreateResponse,
   FindBalanceProps,
   IUserRepository,
+  UpdateUserProps,
 } from "./IUserRepository";
 
 export class UserRepository implements IUserRepository {
@@ -67,5 +68,25 @@ export class UserRepository implements IUserRepository {
     });
 
     return transactions;
+  }
+
+  async updateUser(props: UpdateUserProps): Promise<CreateResponse> {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: props.user_id,
+      },
+      data: {
+        name: props.name,
+        balance: props.balance,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        balance: true,
+      },
+    });
+
+    return updatedUser;
   }
 }

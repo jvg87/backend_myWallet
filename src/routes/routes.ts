@@ -3,6 +3,7 @@ import {
   authUserController,
   createUserController,
   detailUserController,
+  updateUserController,
 } from "../controller/User";
 import { isAuthenticated } from "../middleware/isAuthenticated";
 
@@ -20,6 +21,10 @@ router.use(isAuthenticated);
 
 router.get("/me", async (req: Request, res: Response) => {
   await detailUserController.handle(req, res);
+});
+
+router.put("/me", async (req: Request, res: Response) => {
+  await updateUserController.handle(req, res);
 });
 
 export { router };

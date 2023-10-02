@@ -28,9 +28,16 @@ export interface FindBalanceProps {
   newDate?: Date;
 }
 
+export interface UpdateUserProps {
+  user_id: string;
+  name?: string;
+  balance?: number;
+}
+
 export interface IUserRepository {
   create: (props: CreateProps) => Promise<CreateResponse>;
   findUserByEmail: (email: string) => Promise<IUSer | null>;
   findUserById: (id: string) => Promise<CreateResponse | null>;
   findBalance: (props: FindBalanceProps) => Promise<Transaction[]>;
+  updateUser: (props: UpdateUserProps) => Promise<CreateResponse>;
 }
