@@ -8,7 +8,7 @@ import { IUserController } from "../../User/protocols";
 const bodySchema = z.object({
   value: z.number(),
   category_id: z.string(),
-  date: z.string().optional(),
+  date: z.string(),
   type: z.nativeEnum(Type),
   description: z.string().optional(),
 });

@@ -6,7 +6,7 @@ export interface TransactionsExecute {
   value: number;
   category_id: string;
   description?: string;
-  date?: string;
+  date: string;
 }
 
 export interface ICreateTransactionService {
