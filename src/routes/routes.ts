@@ -11,6 +11,7 @@ import {
 } from "../controller/Transaction";
 import {
   authUserController,
+  balanceController,
   createUserController,
   detailUserController,
   updateUserController,
@@ -36,6 +37,9 @@ router.get("/me", async (req: Request, res: Response) => {
 
 router.put("/me", async (req: Request, res: Response) => {
   await updateUserController.handle(req, res);
+});
+router.get("/balance", async (req: Request, res: Response) => {
+  await balanceController.handle(req, res);
 });
 
 // -------TRANSACTION----------

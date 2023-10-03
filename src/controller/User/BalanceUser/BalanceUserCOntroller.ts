@@ -15,7 +15,7 @@ export class BalanceUserController implements IUserController {
   async handle(req: Request, res: Response): Promise<Response> {
     const user_id = req.user_id;
 
-    const { date, month, year } = handleRequest.parse(req.params);
+    const { date, month, year } = handleRequest.parse(req.query);
 
     const balance = await this.balanceService.execute({
       user_id,

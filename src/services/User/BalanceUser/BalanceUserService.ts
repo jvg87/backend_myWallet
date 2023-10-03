@@ -17,11 +17,11 @@ export class BalanceUserService implements IBalanceUserService {
   async execute({
     user_id,
     date,
-    month,
-    year,
-  }: BalanceProps): Promise<BalanceResponse[]> {
-    if (user_id) {
-      throw new UnauthorizedError("Invalid user");
+  } // month,
+  // year,
+  : BalanceProps): Promise<BalanceResponse[]> {
+    if (!user_id) {
+      throw new UnauthorizedError("Invalid user!!!");
     }
 
     const dashboard: BalanceResponse[] = [];
