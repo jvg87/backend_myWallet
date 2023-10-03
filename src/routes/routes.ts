@@ -5,6 +5,7 @@ import {
   getCategoryController,
   updateCategoryController,
 } from "../controller/Category";
+import { creteTransactionController } from "../controller/Transaction";
 import {
   authUserController,
   createUserController,
@@ -32,6 +33,12 @@ router.get("/me", async (req: Request, res: Response) => {
 
 router.put("/me", async (req: Request, res: Response) => {
   await updateUserController.handle(req, res);
+});
+
+// -------TRANSACTION----------
+
+router.post("/transaction", async (req: Request, res: Response) => {
+  await creteTransactionController.handle(req, res);
 });
 
 // --------CATEGORY-----------
