@@ -1,5 +1,12 @@
-import { Transaction } from "@prisma/client";
+import { Transaction, Type } from "@prisma/client";
+
+export interface GetTransactionsServiceProps {
+  user_id: string;
+  type?: Type;
+  category_id?: string;
+  date?: string;
+}
 
 export interface IGetTransactionsService {
-  execute: (user_id: string) => Promise<Transaction[]>;
+  execute: (props: GetTransactionsServiceProps) => Promise<Transaction[]>;
 }

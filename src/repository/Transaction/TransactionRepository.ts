@@ -1,4 +1,4 @@
-import { Category, Transaction } from "@prisma/client";
+import { Category, Transaction, Type } from "@prisma/client";
 import prisma from "../../database/prisma";
 import { CreateResponse } from "../User/IUserRepository";
 import {
@@ -56,6 +56,31 @@ export class TransactionRepository implements ITransactionRepository {
     const transactions = await prisma.transaction.findMany({
       where: {
         user_id,
+      },
+    });
+
+    return transactions;
+  }
+
+  async findTransactionsByType(
+    user_id: string,
+    type: Type
+  ): Promise<Transaction[]> {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        user_id,
+        type,
+      },
+    });
+    return transactions;
+  }
+
+  async findTransactionsByCategory(
+    category_id: string
+  ): Promise<Transaction[]> {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        category_id,
       },
     });
 

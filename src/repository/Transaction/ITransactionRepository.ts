@@ -16,4 +16,9 @@ export interface ITransactionRepository {
   findCategoryById: (id: string) => Promise<Category | null>;
   updateBalance: (user_id: string, newBalance: number) => Promise<void>;
   findAllTransactions: (user_id: string) => Promise<Transaction[]>;
+  findTransactionsByType: (
+    user_id: string,
+    type: Type
+  ) => Promise<Transaction[]>;
+  findTransactionsByCategory: (category_id: string) => Promise<Transaction[]>;
 }
