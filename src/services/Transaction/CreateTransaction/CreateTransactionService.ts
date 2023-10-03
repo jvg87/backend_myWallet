@@ -47,7 +47,7 @@ export class CreateTransactionService implements ICreateTransactionService {
       await this.transactionRepository.updateBalance(findUser.id, newBalance);
     }
 
-    const newDate = new Date(date);
+    const newDate = date ? new Date(date) : new Date();
 
     const newTransaction = await this.transactionRepository.createTransaction({
       category_id,
