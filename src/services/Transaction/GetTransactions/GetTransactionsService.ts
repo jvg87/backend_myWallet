@@ -12,7 +12,40 @@ export class GetTransactionsService implements IGetTransactionsService {
     user_id,
     category_id,
     type,
+    date,
   }: GetTransactionsServiceProps): Promise<Transaction[]> {
+    if (date) {
+      const newDate = new Date(date);
+
+      if (type) {
+        const transactions = await this.transactionRepository.findTransactions(
+          user_id,
+          type,
+          undefined,
+          newDate
+        );
+        return transactions;
+      }
+
+      if (category_id) {
+        const transactions = await this.transactionRepository.findTransactions(
+          user_id,
+          undefined,
+          category_id,
+          newDate
+        );
+        return transactions;
+      }
+      const transactions = await this.transactionRepository.findTransactions(
+        user_id,
+        undefined,
+        undefined,
+        newDate
+      );
+
+      return transactions;
+    }
+
     if (type) {
       const transactions = await this.transactionRepository.findTransactions(
         user_id,

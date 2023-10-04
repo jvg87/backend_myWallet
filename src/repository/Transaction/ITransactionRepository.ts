@@ -18,6 +18,7 @@ export interface ITransactionRepository {
   findTransactions: (
     user_id: string,
     type?: Type,
-    category_id?: string
+    category_id?: string,
+    newDate?: Date
   ) => Promise<Transaction[]>;
 }

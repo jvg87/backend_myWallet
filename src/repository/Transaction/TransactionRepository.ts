@@ -55,38 +55,18 @@ export class TransactionRepository implements ITransactionRepository {
   async findTransactions(
     user_id: string,
     type?: Type,
-    category_id?: string
+    category_id?: string,
+    newDate?: Date
   ): Promise<Transaction[]> {
     const transactions = await prisma.transaction.findMany({
       where: {
         user_id,
         type: type ? type : undefined,
         category_id: category_id ? category_id : undefined,
+        date: newDate ? newDate : undefined,
       },
-    });
-
-    return transactions;
-  }
-
-  async findTransactionsByType(
-    user_id: string,
-    type: Type
-  ): Promise<Transaction[]> {
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        user_id,
-        type,
-      },
-    });
-    return transactions;
-  }
-
-  async findTransactionsByCategory(
-    category_id: string
-  ): Promise<Transaction[]> {
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        category_id,
+      orderBy: {
+        date: "desc",
       },
     });
 
