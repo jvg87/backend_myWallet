@@ -10,6 +10,7 @@ const querySchema = z.object({
   type: z.nativeEnum(Type).optional(),
   date: z.string().optional(),
   year: z.string().optional(),
+  month: z.string().optional(),
 });
 
 export class GetTransactionsController implements IUserController {
@@ -19,7 +20,9 @@ export class GetTransactionsController implements IUserController {
   async handle(req: Request, res: Response): Promise<Response> {
     const user_id = req.user_id;
 
-    const { category_id, type, date, year } = querySchema.parse(req.query);
+    const { category_id, type, date, year, month } = querySchema.parse(
+      req.query
+    );
 
     const response = await this.getTransactionsService.execute({
       user_id,
@@ -27,6 +30,7 @@ export class GetTransactionsController implements IUserController {
       type,
       date,
       year,
+      month,
     });
 
     return res.status(StatusCodes.OK).json(response);

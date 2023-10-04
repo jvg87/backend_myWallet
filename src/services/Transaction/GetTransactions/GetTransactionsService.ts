@@ -1,4 +1,5 @@
 import { Transaction } from "@prisma/client";
+import { getMonthNumber } from "../../../helpers/getMonth";
 import { ITransactionRepository } from "../../../repository/Transaction/ITransactionRepository";
 import {
   GetTransactionsServiceProps,
@@ -14,6 +15,7 @@ export class GetTransactionsService implements IGetTransactionsService {
     type,
     date,
     year,
+    month,
   }: GetTransactionsServiceProps): Promise<Transaction[]> {
     if (date) {
       const newDate = new Date(date);
@@ -42,6 +44,47 @@ export class GetTransactionsService implements IGetTransactionsService {
         undefined,
         undefined,
         newDate
+      );
+
+      return transactions;
+    }
+
+    if (month) {
+      const monthNumber = Number(getMonthNumber(month));
+      const year = new Date().getFullYear();
+      const startDate = new Date(year, monthNumber - 1, 1);
+      const endDate = new Date(year, monthNumber, 0);
+
+      if (type) {
+        const transactions = await this.transactionRepository.findTransactions(
+          user_id,
+          type,
+          undefined,
+          undefined,
+          startDate,
+          endDate
+        );
+        return transactions;
+      }
+
+      if (category_id) {
+        const transactions = await this.transactionRepository.findTransactions(
+          user_id,
+          undefined,
+          category_id,
+          undefined,
+          startDate,
+          endDate
+        );
+        return transactions;
+      }
+      const transactions = await this.transactionRepository.findTransactions(
+        user_id,
+        undefined,
+        undefined,
+        undefined,
+        startDate,
+        endDate
       );
 
       return transactions;
