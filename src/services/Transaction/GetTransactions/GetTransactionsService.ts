@@ -19,163 +19,34 @@ export class GetTransactionsService implements IGetTransactionsService {
     year,
     month,
   }: GetTransactionsServiceProps): Promise<GetTransactionsServiceResponse> {
-    if (date) {
-      const newDate = new Date(date);
+    let startDate: Date | undefined;
+    let endDate: Date | undefined;
 
-      if (type) {
-        const transactions = await this.transactionRepository.findTransactions(
-          skip,
-          take,
-          user_id,
-          type,
-          undefined,
-          newDate
-        );
-        return transactions;
-      }
-
-      if (category_id) {
-        const transactions = await this.transactionRepository.findTransactions(
-          skip,
-          take,
-          user_id,
-          undefined,
-          category_id,
-          newDate
-        );
-        return transactions;
-      }
-      const transactions = await this.transactionRepository.findTransactions(
-        skip,
-        take,
-        user_id,
-        undefined,
-        undefined,
-        newDate
-      );
-
-      return transactions;
-    }
+    const newDate = date ? new Date(date) : undefined;
 
     if (month) {
       const monthNumber = Number(getMonthNumber(month));
-      const year = new Date().getFullYear();
-      const startDate = new Date(year, monthNumber - 1, 1);
-      const endDate = new Date(year, monthNumber, 0);
-
-      if (type) {
-        const transactions = await this.transactionRepository.findTransactions(
-          skip,
-          take,
-          user_id,
-          type,
-          undefined,
-          undefined,
-          startDate,
-          endDate
-        );
-        return transactions;
-      }
-
-      if (category_id) {
-        const transactions = await this.transactionRepository.findTransactions(
-          skip,
-          take,
-          user_id,
-          undefined,
-          category_id,
-          undefined,
-          startDate,
-          endDate
-        );
-        return transactions;
-      }
-      const transactions = await this.transactionRepository.findTransactions(
-        skip,
-        take,
-        user_id,
-        undefined,
-        undefined,
-        undefined,
-        startDate,
-        endDate
-      );
-
-      return transactions;
+      const realYear = Number(year || new Date().getFullYear());
+      startDate = new Date(realYear, monthNumber - 1, 1);
+      endDate = new Date(realYear, monthNumber, 0);
     }
 
     if (year) {
-      const realYear = year ? year : new Date().getFullYear();
-
-      const startDate = new Date(`${realYear}-01-01`);
-      const endDate = new Date(`${realYear}-12-31`);
-
-      if (type) {
-        const transactions = await this.transactionRepository.findTransactions(
-          skip,
-          take,
-          user_id,
-          type,
-          undefined,
-          undefined,
-          startDate,
-          endDate
-        );
-        return transactions;
-      }
-
-      if (category_id) {
-        const transactions = await this.transactionRepository.findTransactions(
-          skip,
-          take,
-          user_id,
-          undefined,
-          category_id,
-          undefined,
-          startDate,
-          endDate
-        );
-        return transactions;
-      }
-      const transactions = await this.transactionRepository.findTransactions(
-        skip,
-        take,
-        user_id,
-        undefined,
-        undefined,
-        undefined,
-        startDate,
-        endDate
-      );
-
-      return transactions;
+      const realYear = year || new Date().getFullYear();
+      startDate = new Date(`${realYear}-01-01`);
+      endDate = new Date(`${realYear}-12-31`);
     }
 
-    if (type) {
-      const transactions = await this.transactionRepository.findTransactions(
-        skip,
-        take,
-        user_id,
-        type
-      );
-      return transactions;
-    }
-
-    if (category_id) {
-      const transactions = await this.transactionRepository.findTransactions(
-        skip,
-        take,
-        user_id,
-        undefined,
-        category_id
-      );
-      return transactions;
-    }
-    const transactions = await this.transactionRepository.findTransactions(
+    const transactions = await this.transactionRepository.findTransactions({
       skip,
       take,
-      user_id
-    );
+      user_id,
+      category_id,
+      type,
+      endDate,
+      newDate,
+      startDate,
+    });
 
     return transactions;
   }

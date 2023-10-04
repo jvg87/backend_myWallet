@@ -1,9 +1,10 @@
-import { Category, Transaction, Type } from "@prisma/client";
+import { Category, Transaction } from "@prisma/client";
 import prisma from "../../database/prisma";
 import { GetTransactionsServiceResponse } from "../../services/Transaction/GetTransactions/Protocols";
 import { CreateResponse } from "../User/IUserRepository";
 import {
   CreateTransactionProps,
+  GetTransactionsProps,
   ITransactionRepository,
 } from "./ITransactionRepository";
 
@@ -53,16 +54,16 @@ export class TransactionRepository implements ITransactionRepository {
     });
   }
 
-  async findTransactions(
-    skip: number,
-    take: number,
-    user_id: string,
-    type?: Type,
-    category_id?: string,
-    newDate?: Date,
-    startDate?: Date,
-    endDate?: Date
-  ): Promise<GetTransactionsServiceResponse> {
+  async findTransactions({
+    skip,
+    take,
+    user_id,
+    category_id,
+    endDate,
+    newDate,
+    startDate,
+    type,
+  }: GetTransactionsProps): Promise<GetTransactionsServiceResponse> {
     const [transactions, total] = await prisma.$transaction([
       prisma.transaction.findMany({
         where: {

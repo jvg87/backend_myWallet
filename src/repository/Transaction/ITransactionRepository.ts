@@ -11,19 +11,23 @@ export interface CreateTransactionProps {
   date: Date;
 }
 
+export interface GetTransactionsProps {
+  skip: number;
+  take: number;
+  user_id: string;
+  type?: Type;
+  category_id?: string;
+  newDate?: Date;
+  startDate?: Date;
+  endDate?: Date;
+}
+
 export interface ITransactionRepository {
   createTransaction: (props: CreateTransactionProps) => Promise<Transaction>;
   findUserById: (id: string) => Promise<CreateResponse | null>;
   findCategoryById: (id: string) => Promise<Category | null>;
   updateBalance: (user_id: string, newBalance: number) => Promise<void>;
   findTransactions: (
-    skip: number,
-    take: number,
-    user_id: string,
-    type?: Type,
-    category_id?: string,
-    newDate?: Date,
-    startDate?: Date,
-    endDate?: Date
+    props: GetTransactionsProps
   ) => Promise<GetTransactionsServiceResponse>;
 }
