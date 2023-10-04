@@ -1,8 +1,8 @@
-import { Transaction } from "@prisma/client";
 import { getMonthNumber } from "../../../helpers/getMonth";
 import { ITransactionRepository } from "../../../repository/Transaction/ITransactionRepository";
 import {
   GetTransactionsServiceProps,
+  GetTransactionsServiceResponse,
   IGetTransactionsService,
 } from "./Protocols";
 
@@ -10,18 +10,22 @@ export class GetTransactionsService implements IGetTransactionsService {
   constructor(private readonly transactionRepository: ITransactionRepository) {}
 
   async execute({
+    skip,
+    take,
     user_id,
     category_id,
     type,
     date,
     year,
     month,
-  }: GetTransactionsServiceProps): Promise<Transaction[]> {
+  }: GetTransactionsServiceProps): Promise<GetTransactionsServiceResponse> {
     if (date) {
       const newDate = new Date(date);
 
       if (type) {
         const transactions = await this.transactionRepository.findTransactions(
+          skip,
+          take,
           user_id,
           type,
           undefined,
@@ -32,6 +36,8 @@ export class GetTransactionsService implements IGetTransactionsService {
 
       if (category_id) {
         const transactions = await this.transactionRepository.findTransactions(
+          skip,
+          take,
           user_id,
           undefined,
           category_id,
@@ -40,6 +46,8 @@ export class GetTransactionsService implements IGetTransactionsService {
         return transactions;
       }
       const transactions = await this.transactionRepository.findTransactions(
+        skip,
+        take,
         user_id,
         undefined,
         undefined,
@@ -57,6 +65,8 @@ export class GetTransactionsService implements IGetTransactionsService {
 
       if (type) {
         const transactions = await this.transactionRepository.findTransactions(
+          skip,
+          take,
           user_id,
           type,
           undefined,
@@ -69,6 +79,8 @@ export class GetTransactionsService implements IGetTransactionsService {
 
       if (category_id) {
         const transactions = await this.transactionRepository.findTransactions(
+          skip,
+          take,
           user_id,
           undefined,
           category_id,
@@ -79,6 +91,8 @@ export class GetTransactionsService implements IGetTransactionsService {
         return transactions;
       }
       const transactions = await this.transactionRepository.findTransactions(
+        skip,
+        take,
         user_id,
         undefined,
         undefined,
@@ -98,6 +112,8 @@ export class GetTransactionsService implements IGetTransactionsService {
 
       if (type) {
         const transactions = await this.transactionRepository.findTransactions(
+          skip,
+          take,
           user_id,
           type,
           undefined,
@@ -110,6 +126,8 @@ export class GetTransactionsService implements IGetTransactionsService {
 
       if (category_id) {
         const transactions = await this.transactionRepository.findTransactions(
+          skip,
+          take,
           user_id,
           undefined,
           category_id,
@@ -120,6 +138,8 @@ export class GetTransactionsService implements IGetTransactionsService {
         return transactions;
       }
       const transactions = await this.transactionRepository.findTransactions(
+        skip,
+        take,
         user_id,
         undefined,
         undefined,
@@ -133,6 +153,8 @@ export class GetTransactionsService implements IGetTransactionsService {
 
     if (type) {
       const transactions = await this.transactionRepository.findTransactions(
+        skip,
+        take,
         user_id,
         type
       );
@@ -141,14 +163,19 @@ export class GetTransactionsService implements IGetTransactionsService {
 
     if (category_id) {
       const transactions = await this.transactionRepository.findTransactions(
+        skip,
+        take,
         user_id,
         undefined,
         category_id
       );
       return transactions;
     }
-    const transactions =
-      await this.transactionRepository.findTransactions(user_id);
+    const transactions = await this.transactionRepository.findTransactions(
+      skip,
+      take,
+      user_id
+    );
 
     return transactions;
   }

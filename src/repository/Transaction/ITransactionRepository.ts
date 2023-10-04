@@ -1,4 +1,5 @@
 import { Category, Transaction, Type } from "@prisma/client";
+import { GetTransactionsServiceResponse } from "../../services/Transaction/GetTransactions/Protocols";
 import { CreateResponse } from "../User/IUserRepository";
 
 export interface CreateTransactionProps {
@@ -16,11 +17,13 @@ export interface ITransactionRepository {
   findCategoryById: (id: string) => Promise<Category | null>;
   updateBalance: (user_id: string, newBalance: number) => Promise<void>;
   findTransactions: (
+    skip: number,
+    take: number,
     user_id: string,
     type?: Type,
     category_id?: string,
     newDate?: Date,
     startDate?: Date,
     endDate?: Date
-  ) => Promise<Transaction[]>;
+  ) => Promise<GetTransactionsServiceResponse>;
 }

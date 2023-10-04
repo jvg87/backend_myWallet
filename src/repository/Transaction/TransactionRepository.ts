@@ -1,5 +1,6 @@
 import { Category, Transaction, Type } from "@prisma/client";
 import prisma from "../../database/prisma";
+import { GetTransactionsServiceResponse } from "../../services/Transaction/GetTransactions/Protocols";
 import { CreateResponse } from "../User/IUserRepository";
 import {
   CreateTransactionProps,
@@ -53,30 +54,51 @@ export class TransactionRepository implements ITransactionRepository {
   }
 
   async findTransactions(
+    skip: number,
+    take: number,
     user_id: string,
     type?: Type,
     category_id?: string,
     newDate?: Date,
     startDate?: Date,
     endDate?: Date
-  ): Promise<Transaction[]> {
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        user_id,
-        type: type ? type : undefined,
-        category_id: category_id ? category_id : undefined,
-        date: newDate
-          ? newDate
-          : {
-              gte: startDate,
-              lte: endDate,
-            },
-      },
-      orderBy: {
-        date: "desc",
-      },
-    });
+  ): Promise<GetTransactionsServiceResponse> {
+    const [transactions, total] = await prisma.$transaction([
+      prisma.transaction.findMany({
+        where: {
+          user_id,
+          type: type ? type : undefined,
+          category_id: category_id ? category_id : undefined,
+          date: newDate
+            ? newDate
+            : {
+                gte: startDate,
+                lte: endDate,
+              },
+        },
+        orderBy: {
+          date: "desc",
+        },
+        skip,
+        take,
+      }),
+      prisma.transaction.count({
+        where: {
+          user_id,
+          type: type ? type : undefined,
+          category_id: category_id ? category_id : undefined,
+          date: newDate
+            ? newDate
+            : {
+                gte: startDate,
+                lte: endDate,
+              },
+        },
+      }),
+    ]);
 
-    return transactions;
+    const totalPages = Math.ceil(total / take);
+
+    return { total, totalPages, transactions };
   }
 }

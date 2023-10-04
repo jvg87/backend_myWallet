@@ -1,6 +1,8 @@
 import { Transaction, Type } from "@prisma/client";
 
 export interface GetTransactionsServiceProps {
+  skip: number;
+  take: number;
   user_id: string;
   type?: Type;
   category_id?: string;
@@ -9,6 +11,14 @@ export interface GetTransactionsServiceProps {
   month?: string;
 }
 
+export interface GetTransactionsServiceResponse {
+  total: number;
+  totalPages: number;
+  transactions: Transaction[];
+}
+
 export interface IGetTransactionsService {
-  execute: (props: GetTransactionsServiceProps) => Promise<Transaction[]>;
+  execute: (
+    props: GetTransactionsServiceProps
+  ) => Promise<GetTransactionsServiceResponse>;
 }
