@@ -4,6 +4,7 @@ export interface GetTransactionsServiceProps {
   skip: number;
   take: number;
   user_id: string;
+  id?: string;
   type?: Type;
   category_id?: string;
   date?: string;
@@ -20,5 +21,5 @@ export interface GetTransactionsServiceResponse {
 export interface IGetTransactionsService {
   execute: (
     props: GetTransactionsServiceProps
-  ) => Promise<GetTransactionsServiceResponse>;
+  ) => Promise<GetTransactionsServiceResponse | Transaction | null>;
 }

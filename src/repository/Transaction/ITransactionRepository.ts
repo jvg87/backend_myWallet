@@ -27,6 +27,7 @@ export interface ITransactionRepository {
   findUserById: (id: string) => Promise<CreateResponse | null>;
   findCategoryById: (id: string) => Promise<Category | null>;
   updateBalance: (user_id: string, newBalance: number) => Promise<void>;
+  findTransactionById: (id: string) => Promise<Transaction | null>;
   findTransactions: (
     props: GetTransactionsProps
   ) => Promise<GetTransactionsServiceResponse>;

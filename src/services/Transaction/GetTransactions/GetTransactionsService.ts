@@ -1,3 +1,4 @@
+import { Transaction } from "@prisma/client";
 import { getMonthNumber } from "../../../helpers/getMonth";
 import { ITransactionRepository } from "../../../repository/Transaction/ITransactionRepository";
 import {
@@ -13,12 +14,22 @@ export class GetTransactionsService implements IGetTransactionsService {
     skip,
     take,
     user_id,
+    id,
     category_id,
     type,
     date,
     year,
     month,
-  }: GetTransactionsServiceProps): Promise<GetTransactionsServiceResponse> {
+  }: GetTransactionsServiceProps): Promise<
+    GetTransactionsServiceResponse | Transaction | null
+  > {
+    if (id) {
+      const transaction =
+        await this.transactionRepository.findTransactionById(id);
+
+      return transaction;
+    }
+
     let startDate: Date | undefined;
     let endDate: Date | undefined;
 

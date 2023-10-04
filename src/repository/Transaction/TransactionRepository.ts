@@ -63,11 +63,13 @@ export class TransactionRepository implements ITransactionRepository {
     newDate,
     startDate,
     type,
+    id,
   }: GetTransactionsProps): Promise<GetTransactionsServiceResponse> {
     const [transactions, total] = await prisma.$transaction([
       prisma.transaction.findMany({
         where: {
           user_id,
+          id: id ? id : undefined,
           type: type ? type : undefined,
           category_id: category_id ? category_id : undefined,
           date: newDate
@@ -101,5 +103,15 @@ export class TransactionRepository implements ITransactionRepository {
     const totalPages = Math.ceil(total / take);
 
     return { total, totalPages, transactions };
+  }
+
+  async findTransactionById(id: string): Promise<Transaction | null> {
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return transaction;
   }
 }

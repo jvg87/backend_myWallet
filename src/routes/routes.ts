@@ -50,6 +50,9 @@ router.post("/transaction", async (req: Request, res: Response) => {
 router.get("/transaction", async (req: Request, res: Response) => {
   await getTransactionsController.handle(req, res);
 });
+router.get("/transaction/:id", async (req: Request, res: Response) => {
+  await getTransactionsController.handle(req, res);
+});
 
 // --------CATEGORY-----------
 

@@ -15,6 +15,10 @@ const querySchema = z.object({
   month: z.string().optional(),
 });
 
+const paramsSchema = z.object({
+  id: z.string().optional(),
+});
+
 export class GetTransactionsController implements IUserController {
   constructor(
     private readonly getTransactionsService: GetTransactionsService
@@ -25,6 +29,8 @@ export class GetTransactionsController implements IUserController {
     const { skip, take, category_id, type, date, year, month } =
       querySchema.parse(req.query);
 
+    const { id } = paramsSchema.parse(req.params);
+
     const response = await this.getTransactionsService.execute({
       skip: Number(skip),
       take: Number(take),
@@ -34,6 +40,7 @@ export class GetTransactionsController implements IUserController {
       date,
       year,
       month,
+      id,
     });
 
     return res.status(StatusCodes.OK).json(response);
