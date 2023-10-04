@@ -5,6 +5,8 @@ export interface GetTransactionsServiceProps {
   type?: Type;
   category_id?: string;
   date?: string;
+  year?: string;
+  month?: string;
 }
 
 export interface IGetTransactionsService {

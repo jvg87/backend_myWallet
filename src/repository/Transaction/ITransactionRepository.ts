@@ -19,6 +19,8 @@ export interface ITransactionRepository {
     user_id: string,
     type?: Type,
     category_id?: string,
-    newDate?: Date
+    newDate?: Date,
+    startDate?: Date,
+    endDate?: Date
   ) => Promise<Transaction[]>;
 }

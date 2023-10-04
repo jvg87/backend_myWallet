@@ -56,14 +56,21 @@ export class TransactionRepository implements ITransactionRepository {
     user_id: string,
     type?: Type,
     category_id?: string,
-    newDate?: Date
+    newDate?: Date,
+    startDate?: Date,
+    endDate?: Date
   ): Promise<Transaction[]> {
     const transactions = await prisma.transaction.findMany({
       where: {
         user_id,
         type: type ? type : undefined,
         category_id: category_id ? category_id : undefined,
-        date: newDate ? newDate : undefined,
+        date: newDate
+          ? newDate
+          : {
+              gte: startDate,
+              lte: endDate,
+            },
       },
       orderBy: {
         date: "desc",
