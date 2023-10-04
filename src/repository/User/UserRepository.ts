@@ -63,7 +63,12 @@ export class UserRepository implements IUserRepository {
       where: {
         user_id: props.user_id,
         type: props.type,
-        date: props.newDate,
+        date: props.newDate
+          ? props.newDate
+          : {
+              gte: props.startDate,
+              lte: props.endDate,
+            },
       },
     });
 

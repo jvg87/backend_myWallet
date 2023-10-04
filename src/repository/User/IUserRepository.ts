@@ -26,6 +26,8 @@ export interface FindBalanceProps {
   user_id: string;
   type: Type;
   newDate?: Date;
+  startDate?: Date;
+  endDate?: Date;
 }
 
 export interface UpdateUserProps {
