@@ -52,10 +52,16 @@ export class TransactionRepository implements ITransactionRepository {
     });
   }
 
-  async findAllTransactions(user_id: string): Promise<Transaction[]> {
+  async findTransactions(
+    user_id: string,
+    type?: Type,
+    category_id?: string
+  ): Promise<Transaction[]> {
     const transactions = await prisma.transaction.findMany({
       where: {
         user_id,
+        type: type ? type : undefined,
+        category_id: category_id ? category_id : undefined,
       },
     });
 
