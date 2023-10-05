@@ -1,4 +1,5 @@
 import { Transaction } from "@prisma/client";
+import { NotFoundError } from "../../../helpers/apiErros";
 import { getMonthNumber } from "../../../helpers/getMonth";
 import { ITransactionRepository } from "../../../repository/Transaction/ITransactionRepository";
 import {
@@ -26,6 +27,10 @@ export class GetTransactionsService implements IGetTransactionsService {
     if (id) {
       const transaction =
         await this.transactionRepository.findTransactionById(id);
+
+      if (!transaction) {
+        throw new NotFoundError("Transaction not found");
+      }
 
       return transaction;
     }

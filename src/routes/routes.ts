@@ -7,6 +7,7 @@ import {
 } from "../controller/Category";
 import {
   creteTransactionController,
+  deleteTransactionController,
   getTransactionsController,
 } from "../controller/Transaction";
 import {
@@ -52,6 +53,9 @@ router.get("/transaction", async (req: Request, res: Response) => {
 });
 router.get("/transaction/:id", async (req: Request, res: Response) => {
   await getTransactionsController.handle(req, res);
+});
+router.delete("/transaction/:id", async (req: Request, res: Response) => {
+  await deleteTransactionController.handle(req, res);
 });
 
 // --------CATEGORY-----------

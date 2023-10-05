@@ -1,7 +1,9 @@
 import { TransactionRepository } from "../../repository/Transaction/TransactionRepository";
 import { CreateTransactionService } from "../../services/Transaction/CreateTransaction/CreateTransactionService";
+import { DeleteTransactionService } from "../../services/Transaction/DeleteTransaction/DeleteTransactionService";
 import { GetTransactionsService } from "../../services/Transaction/GetTransactions/GetTransactionsService";
 import { CreateTransactionController } from "./CreateTransaction/CreateTransactionController";
+import { DeleteTransactionController } from "./DeleteTransaction/DeleteTransactionController";
 import { GetTransactionsController } from "./GetTransactions/GetTransactionsController";
 
 const transactionRepository = new TransactionRepository();
@@ -20,4 +22,15 @@ const getTransactionsController = new GetTransactionsController(
   getTransactionsService
 );
 
-export { creteTransactionController, getTransactionsController };
+const deleteTransactionService = new DeleteTransactionService(
+  transactionRepository
+);
+const deleteTransactionController = new DeleteTransactionController(
+  deleteTransactionService
+);
+
+export {
+  creteTransactionController,
+  deleteTransactionController,
+  getTransactionsController,
+};

@@ -63,13 +63,11 @@ export class TransactionRepository implements ITransactionRepository {
     newDate,
     startDate,
     type,
-    id,
   }: GetTransactionsProps): Promise<GetTransactionsServiceResponse> {
     const [transactions, total] = await prisma.$transaction([
       prisma.transaction.findMany({
         where: {
           user_id,
-          id: id ? id : undefined,
           type: type ? type : undefined,
           category_id: category_id ? category_id : undefined,
           date: newDate
@@ -113,5 +111,15 @@ export class TransactionRepository implements ITransactionRepository {
     });
 
     return transaction;
+  }
+
+  async deleteTransactionById(id: string): Promise<void> {
+    await prisma.transaction.delete({
+      where: {
+        id,
+      },
+    });
+
+    return;
   }
 }
