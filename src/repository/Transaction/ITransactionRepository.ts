@@ -22,6 +22,14 @@ export interface GetTransactionsProps {
   endDate?: Date;
 }
 
+export interface UpdateTransactionProps {
+  value?: number;
+  category_id?: string;
+  description?: string;
+  date?: Date;
+  id: string;
+}
+
 export interface ITransactionRepository {
   createTransaction: (props: CreateTransactionProps) => Promise<Transaction>;
   findUserById: (id: string) => Promise<CreateResponse | null>;
@@ -29,6 +37,7 @@ export interface ITransactionRepository {
   updateBalance: (user_id: string, newBalance: number) => Promise<void>;
   findTransactionById: (id: string) => Promise<Transaction | null>;
   deleteTransactionById: (id: string) => Promise<void>;
+  updateTransactionById: (props: UpdateTransactionProps) => Promise<void>;
   findTransactions: (
     props: GetTransactionsProps
   ) => Promise<GetTransactionsServiceResponse>;

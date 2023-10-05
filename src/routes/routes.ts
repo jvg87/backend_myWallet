@@ -9,6 +9,7 @@ import {
   creteTransactionController,
   deleteTransactionController,
   getTransactionsController,
+  updateTransactionController,
 } from "../controller/Transaction";
 import {
   authUserController,
@@ -56,6 +57,9 @@ router.get("/transaction/:id", async (req: Request, res: Response) => {
 });
 router.delete("/transaction/:id", async (req: Request, res: Response) => {
   await deleteTransactionController.handle(req, res);
+});
+router.put("/transaction/:id", async (req: Request, res: Response) => {
+  await updateTransactionController.handle(req, res);
 });
 
 // --------CATEGORY-----------

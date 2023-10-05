@@ -6,6 +6,7 @@ import {
   CreateTransactionProps,
   GetTransactionsProps,
   ITransactionRepository,
+  UpdateTransactionProps,
 } from "./ITransactionRepository";
 
 export class TransactionRepository implements ITransactionRepository {
@@ -118,6 +119,17 @@ export class TransactionRepository implements ITransactionRepository {
       where: {
         id,
       },
+    });
+
+    return;
+  }
+
+  async updateTransactionById(props: UpdateTransactionProps): Promise<void> {
+    await prisma.transaction.update({
+      where: {
+        id: props.id,
+      },
+      data: props,
     });
 
     return;
